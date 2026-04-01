@@ -1,0 +1,15 @@
+key,type,encoding,value
+
+csi_cfg,namespace,,
+
+ssid,data,string,TESTRUN
+
+password,data,string,12091209
+
+target_ip,data,string,192.168.137.1
+
+target_port,data,u16,5005
+
+node_id,data,u8,1
+
+filter_mac,data,string,3E:D5:7A:97:12:DF
