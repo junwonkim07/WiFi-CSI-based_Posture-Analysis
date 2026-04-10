@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "camera_index_used": 0,
+    "resolution": {
+      "width": 1920,
+      "height": 1080
+    },
+    "fps_target": 30,
+    "fps_reported_by_camera": 30.00003000003,
+    "capture_duration_sec": 2.3885550498962402,
+    "total_frames": 2,
+    "detected_frames": 0,
+    "detected_ratio": 0.0,
+    "note": "COCO17 keypoints extracted from MediaPipe Pose landmarks."
+  },
+  "frames": [
+    {
+      "frame_idx": 0,
+      "timestamp_sec": 1.0839869976043701,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 1,
+      "timestamp_sec": 2.2619197368621826,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    }
+  ]
+}

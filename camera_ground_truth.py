@@ -11,6 +11,7 @@ Default camera index is 0 (with optional fallback to 1).
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import math
 import time
@@ -201,6 +202,107 @@ def draw_hud(frame, used_camera: int, frame_idx: int, detected_count: int) -> No
     draw_outlined_text(line2, (20, 82), 0.70)
 
 
+def save_csv_outputs(frames: List[Dict], timeseries_path: Path, keypoints_path: Path) -> None:
+    joints = ["left_wrist", "right_wrist", "left_ankle", "right_ankle"]
+
+    # 1) Frame-level time series CSV with delta columns for quick trend analysis.
+    header = [
+        "frame_idx",
+        "timestamp_sec",
+        "detected",
+        "torso_length_px",
+        "delta_torso_length_px",
+    ]
+    for j in joints:
+        header.extend([f"{j}_x_px", f"{j}_y_px", f"delta_{j}_y_px"])
+
+    prev_torso = None
+    prev_joint_y: Dict[str, float | None] = {j: None for j in joints}
+
+    with open(timeseries_path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=header)
+        writer.writeheader()
+
+        for frame in frames:
+            row = {
+                "frame_idx": frame["frame_idx"],
+                "timestamp_sec": round(frame["timestamp_sec"], 6),
+                "detected": int(frame["detected"]),
+                "torso_length_px": "",
+                "delta_torso_length_px": "",
+            }
+
+            by_name = {
+                kp["name"]: kp for kp in frame["keypoints_coco17"]
+            } if frame["detected"] else {}
+
+            torso = frame["torso_length_px"]
+            if torso is not None:
+                row["torso_length_px"] = round(torso, 6)
+                if prev_torso is not None:
+                    row["delta_torso_length_px"] = round(torso - prev_torso, 6)
+                prev_torso = torso
+
+            for j in joints:
+                x_key = f"{j}_x_px"
+                y_key = f"{j}_y_px"
+                dy_key = f"delta_{j}_y_px"
+
+                row[x_key] = ""
+                row[y_key] = ""
+                row[dy_key] = ""
+
+                kp = by_name.get(j)
+                if kp is None:
+                    continue
+
+                x = kp["x_px"]
+                y = kp["y_px"]
+                row[x_key] = round(x, 6)
+                row[y_key] = round(y, 6)
+
+                if prev_joint_y[j] is not None:
+                    row[dy_key] = round(y - prev_joint_y[j], 6)
+                prev_joint_y[j] = y
+
+            writer.writerow(row)
+
+    # 2) Long-format CSV for all detected COCO17 keypoints.
+    kp_header = [
+        "frame_idx",
+        "timestamp_sec",
+        "keypoint_name",
+        "mp_index",
+        "x",
+        "y",
+        "z",
+        "visibility",
+        "x_px",
+        "y_px",
+    ]
+    with open(keypoints_path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=kp_header)
+        writer.writeheader()
+        for frame in frames:
+            if not frame["detected"]:
+                continue
+            for kp in frame["keypoints_coco17"]:
+                writer.writerow(
+                    {
+                        "frame_idx": frame["frame_idx"],
+                        "timestamp_sec": round(frame["timestamp_sec"], 6),
+                        "keypoint_name": kp["name"],
+                        "mp_index": kp["mp_index"],
+                        "x": round(kp["x"], 6),
+                        "y": round(kp["y"], 6),
+                        "z": round(kp["z"], 6),
+                        "visibility": round(kp["visibility"], 6),
+                        "x_px": round(kp["x_px"], 6),
+                        "y_px": round(kp["y_px"], 6),
+                    }
+                )
+
+
 def build_plot(frames: List[Dict], plot_path: Path, show_plot: bool) -> None:
     detected_frames = [f for f in frames if f["detected"]]
     if not detected_frames:
@@ -343,6 +445,8 @@ def main() -> None:
     dt_str = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     json_path = output_dir / f"ground_truth_camera_{dt_str}.json"
+    timeseries_csv_path = output_dir / f"ground_truth_timeseries_{dt_str}.csv"
+    keypoints_csv_path = output_dir / f"ground_truth_keypoints_{dt_str}.csv"
     plot_path = output_dir / f"ground_truth_plot_{dt_str}.png"
 
     payload = {
@@ -364,6 +468,9 @@ def main() -> None:
         json.dump(payload, f, ensure_ascii=False, indent=2)
 
     print(f"Saved keypoints JSON: {json_path}")
+    save_csv_outputs(frames, timeseries_csv_path, keypoints_csv_path)
+    print(f"Saved timeseries CSV: {timeseries_csv_path}")
+    print(f"Saved keypoints CSV: {keypoints_csv_path}")
     build_plot(frames, plot_path, show_plot=not args.no_plot)
     print("Done.")
 

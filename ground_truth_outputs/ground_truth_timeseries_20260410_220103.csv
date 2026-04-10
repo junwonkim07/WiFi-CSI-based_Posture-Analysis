@@ -1,0 +1,3 @@
+frame_idx,timestamp_sec,detected,torso_length_px,delta_torso_length_px,left_wrist_x_px,left_wrist_y_px,delta_left_wrist_y_px,right_wrist_x_px,right_wrist_y_px,delta_right_wrist_y_px,left_ankle_x_px,left_ankle_y_px,delta_left_ankle_y_px,right_ankle_x_px,right_ankle_y_px,delta_right_ankle_y_px
+0,1.083987,0,,,,,,,,,,,,,,
+1,2.26192,0,,,,,,,,,,,,,,

@@ -184,3 +184,9 @@ python camera_ground_truth.py --camera-index 0 --fallback-index 1 --max-seconds 
 python camera_ground_truth.py --camera-index 0
 ```
 
+Output files are saved in `ground_truth_outputs`:
+- `ground_truth_camera_YYYYMMDD_HHMMSS.json`
+- `ground_truth_timeseries_YYYYMMDD_HHMMSS.csv`
+- `ground_truth_keypoints_YYYYMMDD_HHMMSS.csv`
+- `ground_truth_plot_YYYYMMDD_HHMMSS.png`
+
