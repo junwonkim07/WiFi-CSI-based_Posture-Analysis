@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "camera_index_used": 0,
+    "resolution": {
+      "width": 1920,
+      "height": 1080
+    },
+    "fps_target": 30,
+    "fps_reported_by_camera": 30.00003000003,
+    "capture_duration_sec": 2.479916572570801,
+    "total_frames": 11,
+    "detected_frames": 0,
+    "detected_ratio": 0.0,
+    "note": "COCO17 keypoints extracted from MediaPipe Pose landmarks."
+  },
+  "frames": [
+    {
+      "frame_idx": 0,
+      "timestamp_sec": 0.14219021797180176,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 1,
+      "timestamp_sec": 1.1344802379608154,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 2,
+      "timestamp_sec": 1.2549614906311035,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 3,
+      "timestamp_sec": 1.3620319366455078,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 4,
+      "timestamp_sec": 1.4582273960113525,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 5,
+      "timestamp_sec": 1.5473377704620361,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 6,
+      "timestamp_sec": 1.636610507965088,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 7,
+      "timestamp_sec": 1.7285807132720947,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 8,
+      "timestamp_sec": 1.833648920059204,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 9,
+      "timestamp_sec": 1.953620195388794,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    },
+    {
+      "frame_idx": 10,
+      "timestamp_sec": 2.05920147895813,
+      "detected": false,
+      "torso_length_px": null,
+      "keypoints_coco17": []
+    }
+  ]
+}

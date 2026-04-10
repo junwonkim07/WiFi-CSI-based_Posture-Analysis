@@ -160,3 +160,27 @@ Target:
 - Reduced heart rate accuracy during exercise  
 - Requires controlled experimental setup  
 
+---
+
+## Camera Ground Truth: Terminal Commands
+
+```bash
+pip install opencv-python mediapipe matplotlib
+```
+
+```bash
+python camera_ground_truth.py
+```
+
+```bash
+python camera_ground_truth.py --camera-index 0 --fallback-index 1 --no-plot
+```
+
+```bash
+python camera_ground_truth.py --camera-index 0 --fallback-index 1 --max-seconds 30
+```
+
+```bash
+python camera_ground_truth.py --camera-index 0
+```
+
